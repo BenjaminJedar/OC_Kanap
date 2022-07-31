@@ -7,11 +7,6 @@ const description = document.querySelector("#description");
 const price = document.querySelector("#price");
 const colors = document.querySelector("#colors");
 
-function addItemToCart (product) {
-    
-}
-
-
 
 fetch("http://localhost:3000/api/products" + "/" + productId)
     .then(function (res) {
@@ -40,7 +35,7 @@ addButton.addEventListener("click", pushCart => {
         alert("Veuillez choisir une couleur");
     }
     else if (quantity.value == 0) {
-        alert("Quantité manimal : 1")
+        alert("Quantité minimale : 1")
     }
     else if (quantity.value > 100) {
         alert("Le nombre maximal de produits pour la commande est 100")
@@ -51,9 +46,10 @@ addButton.addEventListener("click", pushCart => {
             color: colors.value,
             quantity: quantity.value,
         }
-        localStorage.setItem("cart", JSON.stringify(productCartInfo));
-        alert("Produit ajouté au panier !");
     }
+    localStorage.setItem("cart", JSON.stringify(productCartInfo));
+    alert("Produit ajouté au panier !");
+}
 }
 )
 
