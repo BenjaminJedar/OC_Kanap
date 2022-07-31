@@ -46,11 +46,9 @@ addButton.addEventListener("click", pushCart => {
             color: colors.value,
             quantity: quantity.value,
         }
+        localStorage.setItem("cart", JSON.stringify(productCartInfo));
+        alert("Produit ajouté au panier !");
     }
-    localStorage.setItem("cart", JSON.stringify(productCartInfo));
-    alert("Produit ajouté au panier !");
-}
-}
-)
 
+});
 
