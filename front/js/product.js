@@ -1,12 +1,13 @@
-let url = new URL(window.location.href);
-let productId = url.searchParams.get("id")
-
 const img = document.querySelector(".item__img");
 const title = document.querySelector("#title");
 const description = document.querySelector("#description");
 const price = document.querySelector("#price");
 const colors = document.querySelector("#colors");
 
+let url = new URL(window.location.href);
+let productId = url.searchParams.get("id")
+
+let arrayProduct = [];
 
 fetch("http://localhost:3000/api/products" + "/" + productId)
     .then(function (res) {
@@ -46,8 +47,11 @@ addButton.addEventListener("click", pushCart => {
             color: colors.value,
             quantity: quantity.value,
         }
-        localStorage.setItem("cart", JSON.stringify(productCartInfo));
+        
+        arrayProduct.push(JSON.stringify(productCartInfo)); 
+        localStorage.setItem("cart", arrayProduct);
         alert("Produit ajouté au panier !");
+        console.log(localStorage);
     }
 
 });
