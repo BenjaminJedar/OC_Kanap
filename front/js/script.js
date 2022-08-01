@@ -14,7 +14,7 @@ fetch("http://localhost:3000/api/products")
             //Création du lien principal
             const productLink = document.createElement("a");
             section.appendChild(productLink);
-            productLink.href = `../../html/product.html?id=${product[i]._id}`;
+            productLink.href = `./product.html?id=${product[i]._id}`;
 
             //Création de la balise <article>
             const productArticle = document.createElement("article");
