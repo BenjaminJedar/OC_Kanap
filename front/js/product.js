@@ -4,12 +4,16 @@ const description = document.querySelector("#description");
 const price = document.querySelector("#price");
 const colors = document.querySelector("#colors");
 
+const productImg = document.createElement("img");
+
+
 let url = new URL(window.location.href);
 let productId = url.searchParams.get("id")
+let urlApi = "http://localhost:3000/api/products";
 
 let arrayProduct = [];
 
-fetch("http://localhost:3000/api/products" + "/" + productId)
+fetch(urlApi + "/" + productId)
     .then(function (res) {
         //On récupère la promise et on la convertit au format json
         if (res.ok) {
@@ -17,13 +21,26 @@ fetch("http://localhost:3000/api/products" + "/" + productId)
         }
     })
     .then(function (product) {
-        img.innerHTML = `<img src="${product.imageUrl}" alt="${product.altTxt}">`;
-        title.textContent = `${product.name}`;
-        price.textContent = `${product.price}`;
-        description.textContent = `${product.description}`;
+        //Création de l'img du produit
+        img.appendChild(productImg);
+        productImg.src = product.imageUrl;
+        productImg.alt = product.altTxt;
 
+        //Création du nom du produit
+        title.innerHTML = product.name;
+
+        //Création du prix du produit
+        price.innerHTML = product.price;
+
+        //Création de la description du produit
+        description.innerHTML = product.description;
+
+        //Création des différentes options de couleur
         for (let i = 0; i < product.colors.length; i++) {
-            colors.innerHTML = colors.innerHTML + `<option value="${product.colors[i]}">${product.colors[i]}</option>`;
+            const colorOption = document.createElement("option");
+            colors.appendChild(colorOption);
+            colorOption.value = product.colors[i];
+            colorOption.innerHTML = `${product.colors[i]}`;
         };
     });
 
@@ -46,13 +63,21 @@ addButton.addEventListener("click", pushCart => {
             id: productId,
             color: colors.value,
             quantity: quantity.value,
+            img: img.querySelector("img").src,
+            img_alt : img.querySelector("img").alt,
+            name: title.textContent,
+            description: description.textContent,
+            price: price.textContent,
         }
-        
-        arrayProduct.push(JSON.stringify(productCartInfo)); 
-        localStorage.setItem("cart", arrayProduct);
-        alert("Produit ajouté au panier !");
-        console.log(localStorage);
+
+        let cartArray = getCart();
+        cartArray.push(productCartInfo);
+        updateCart(cartArray);
+        alert("Produit ajouté au panier !")
+        console.log(cartArray);
+
     }
 
 });
+
 
