@@ -69,9 +69,7 @@ addButton.addEventListener("click", pushCart => {
             description: description.textContent,
             price: price.textContent,
         }
- 
         updateCart(productCartInfo);
-        alert("Produit ajouté au panier !")
     }
 
 });

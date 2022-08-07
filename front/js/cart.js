@@ -5,7 +5,7 @@ let urlApi = "http://localhost:3000/api/products";
 let localStorageArray = getCart();
 console.log(localStorageArray);
 
-for (let i = 20; i < localStorageArray.length; i++) {
+for (let i = 0; i < localStorageArray.length; i++) {
 
   //Création du bloc <article>
   const productCard = document.createElement("article");
@@ -91,6 +91,7 @@ for (let i = 20; i < localStorageArray.length; i++) {
   productCardDeleteButton.textContent = "Supprimer";
 
 }
+
 
 
 
