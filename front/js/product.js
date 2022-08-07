@@ -69,13 +69,9 @@ addButton.addEventListener("click", pushCart => {
             description: description.textContent,
             price: price.textContent,
         }
-
-        let cartArray = getCart();
-        cartArray.push(productCartInfo);
-        updateCart(cartArray);
+ 
+        updateCart(productCartInfo);
         alert("Produit ajouté au panier !")
-        console.log(cartArray);
-
     }
 
 });
