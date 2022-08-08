@@ -92,6 +92,8 @@ for (let i = 0; i < localStorageArray.length; i++) {
 
 }
 removeProduct();
+showNumberOfArticles();
+makeTotalPrice();
 
 
 

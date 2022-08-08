@@ -38,7 +38,7 @@ function removeProduct() {
             let deleteProductid = targetOfProductToDelete.dataset.id;
             let deleteProductColor = targetOfProductToDelete.dataset.color;
 
-            for (let j = 0; j < cart.length; j++ ) {
+            for (let j = 0; j < cart.length; j++) {
                 if (deleteProductid === cart[i].id && deleteProductColor === cart[i].color) {
                     cart.splice(i, 1);
                     localStorage.setItem("cart", JSON.stringify(cart));
@@ -52,6 +52,28 @@ function removeProduct() {
             }
         });
     }
+}
+
+function showNumberOfArticles() {
+    let cart = getCart();
+    let qtyArticle = 0;
+    for (let i = 0; i < cart.length; i++) {
+        qtyArticle += parseInt(cart[i].quantity);
+    }
+    let totalQuantity = document.querySelector("#totalQuantity");
+    totalQuantity.textContent = qtyArticle;
+}
+
+function makeTotalPrice() {
+    let cart = getCart();
+    let totalPrice = 0;
+    let priceForProduct = 0;
+    for (let i = 0; i < cart.length; i++) {
+        priceForProduct = parseInt(cart[i].quantity) * parseInt(cart[i].price);
+        totalPrice += priceForProduct;
+    }
+    let totalCartPrice = document.querySelector("#totalPrice");
+    totalCartPrice.textContent = totalPrice;
 }
 
 
