@@ -91,6 +91,7 @@ for (let i = 0; i < localStorageArray.length; i++) {
   productCardDeleteButton.textContent = "Supprimer";
 
 }
+removeProduct();
 
 
 
