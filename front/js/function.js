@@ -76,7 +76,67 @@ function makeTotalPrice() {
     totalCartPrice.textContent = totalPrice;
 }
 
+//Requête vers l'API pour récupérer l'objet contenant tous les produits et leurs caractèristiques. la fonction attend la requête avant de poursuivre.
+async function getArticle(productId) {
+  const catchArticles = await fetch("http://localhost:3000/api/products/" + productId)
+    .then((catchArticles) => catchArticles.json())
+    .then(function (data) {
+      article = data;
+    })
+  return article;
+}
 
+function modifyQuantity() {
+    const inputQuantity = document.querySelectorAll(".itemQuantity");
+    let cart = getCart();
+
+    for (let i = 0; i < inputQuantity.length; i++) {
+        const target = inputQuantity[i].closest("article");
+        inputQuantity[i].addEventListener("change", async function () {
+            let changingProductid = target.dataset.id;
+            let changingProductColor = target.dataset.color;
+            let newQty = inputQuantity[i].value;
+
+            for (let j = 0; j < cart.length; j++) {
+                const article = await getArticle(cart[i].id);
+                if (changingProductid === cart[j].id && changingProductColor === cart[j].color) {
+                    cart[j].quantity = newQty;
+                    if (newQty != 0) {
+                        localStorage.setItem("cart", JSON.stringify(cart));
+
+                        let sumArray = [];
+                        let sumProduct = 0;
+                        let qtyArray = [];
+
+                        for (let k = 0; k < cart.length; k++) {
+                            sumProduct = article.price * cart[k].quantity;
+                            sumArray.push(sumProduct);
+                            qtyArray.push(Number(cart[k].quantity));
+                        }
+                        //Faire un reduce et afficher dans le dom le resultat
+
+                        sumArray = sumArray.reduce((a, b) => a + b);
+                        qtyArray = qtyArray.reduce((a, b) => a + b);
+
+                        const totalPriceSpan = document.querySelectorAll("#totalPrice");
+                        //totalPriceSpan.dataset.price = sumArray;
+                        totalPriceSpan.textContent = sumArray;
+
+                        const totalQuantitySpan = document.querySelectorAll("#totalQuantity");
+                        //totalQuantitySpan.dataset.qty = qtyArray;
+                        totalQuantitySpan.textContent = qtyArray;
+                    } else if (newQty == 0) {
+                        cart.splice(cart.indexOf(cart[j]), 1)
+                        localStorage.setItem("cart", JSON.stringify(cart))
+                    } else {
+                        alert("Votre panier est vide")
+                    }
+                    location.reload();
+                }
+            }
+        });
+    };
+};
 
 
 
