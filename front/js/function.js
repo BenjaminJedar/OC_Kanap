@@ -78,12 +78,12 @@ function makeTotalPrice() {
 
 //Requête vers l'API pour récupérer l'objet contenant tous les produits et leurs caractèristiques. la fonction attend la requête avant de poursuivre.
 async function getArticle(productId) {
-  const catchArticles = await fetch("http://localhost:3000/api/products/" + productId)
-    .then((catchArticles) => catchArticles.json())
-    .then(function (data) {
-      article = data;
-    })
-  return article;
+    const catchArticles = await fetch("http://localhost:3000/api/products/" + productId)
+        .then((catchArticles) => catchArticles.json())
+        .then(function (data) {
+            article = data;
+        })
+    return article;
 }
 
 function modifyQuantity() {
@@ -126,10 +126,8 @@ function modifyQuantity() {
                         //totalQuantitySpan.dataset.qty = qtyArray;
                         totalQuantitySpan.textContent = qtyArray;
                     } else if (newQty == 0) {
-                        cart.splice(cart.indexOf(cart[j]), 1)
-                        localStorage.setItem("cart", JSON.stringify(cart))
-                    } else {
-                        alert("Votre panier est vide")
+                        cart.splice(cart.indexOf(cart[j]), 1);
+                        localStorage.setItem("cart", JSON.stringify(cart));
                     }
                     location.reload();
                 }
@@ -138,5 +136,59 @@ function modifyQuantity() {
     };
 };
 
+function formValidator() {
 
+    let email = document.querySelector("#email");
+
+    const validEmail = function (inputEmail) {
+        let emailRegExp = new RegExp('^[a-zA-Z0-9.-_]{1,50}[@]{1}[a-zA-Z0-9.-_]{1,50}[.]{1}[a-z]{2,10}$', 'g');
+
+        let testEmail = emailRegExp.test(inputEmail.value);
+        let errorMessage = inputEmail.nextElementSibling;
+
+        if (inputEmail.value === "") {
+            errorMessage.innerHTML = "";
+        } else if (testEmail === false) {
+            errorMessage.innerHTML = "Adresse mail invalide";
+        } else if (testEmail === true) {
+            errorMessage.innerHTML = "";
+        }
+    }
+
+    const validInfo = function (inputInfo) {
+        let infoRegExp = new RegExp('^[a-zA-Z-_./]{2,50}$', 'g');
+
+        let testInfo = infoRegExp.test(inputInfo.value);
+        let errorMessage = inputInfo.nextElementSibling;
+
+        if (inputInfo.value === "") {
+            errorMessage.innerHTML = "";
+        } else if (testInfo === false) {
+            errorMessage.innerHTML = "Le champ doit être compris entre 2 et 50 caractères, les symboles ne sont pas autorisés.";
+        } else if (testInfo === true) {
+            errorMessage.innerHTML = "";
+        }
+    }
+
+    email.addEventListener("change", function () {
+        validEmail(this);
+    });
+
+    let lastName = document.querySelector("#lastName");
+    let firstName = document.querySelector("#firstName");
+    let city = document.querySelector("#city");
+    let address = document.querySelector('#address');
+
+    lastName.addEventListener("input", function () {
+        validInfo(this);
+    });
+
+    firstName.addEventListener("input", function () {
+        validInfo(this);
+    });
+
+    city.addEventListener("input", function () {
+        validInfo(this);
+    });
+}
 

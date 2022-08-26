@@ -95,6 +95,7 @@ removeProduct();
 showNumberOfArticles();
 makeTotalPrice();
 modifyQuantity();
+formValidator();
 
 
 
