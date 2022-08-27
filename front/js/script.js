@@ -1,13 +1,14 @@
 fetch("http://localhost:3000/api/products")
 
     .then(function (res) {
-        //On récupère la promise et on la convertit au format json
+        //Récupération de la promesse et convertion au format JSON
         if (res.ok) {
             return res.json();
         }
     })
     .then(function (product) {
-        /*On crée de nouveau éléments de manière dynamique et on les remplit avec nos données récupérées de l'API*/
+        /*Création des éléments de manière dynamique complété par les
+         données récupérées de l'API*/
         for (let i = 0; i < product.length; i++) {
             let section = document.getElementById("items")
 

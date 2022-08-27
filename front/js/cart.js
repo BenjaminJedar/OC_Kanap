@@ -2,9 +2,12 @@ const items = document.querySelector("#cart__items");
 
 let urlApi = "http://localhost:3000/api/products";
 
+//Récupération du panier du ls
 let localStorageArray = getCart();
 console.log(localStorageArray);
 
+/*On crée l'affichage des produits selectionné 
+de manière dynamique en récupérant les infos du localStorage*/
 for (let i = 0; i < localStorageArray.length; i++) {
 
   //Création du bloc <article>
@@ -91,11 +94,13 @@ for (let i = 0; i < localStorageArray.length; i++) {
   productCardDeleteButton.textContent = "Supprimer";
 
 }
+//Appele des différentes fontions
 removeProduct();
 showNumberOfArticles();
 makeTotalPrice();
 modifyQuantity();
 formValidator();
+postCart();
 
 
 
