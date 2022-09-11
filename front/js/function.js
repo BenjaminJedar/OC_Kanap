@@ -157,7 +157,8 @@ function modifyQuantity() {
         });
     };
 };
-
+//Variable pour définir si l'adresse mail renseigné par l'utilisateur est accéptable ou non 
+let emailIsValid = true;
 //Vérification du bon remplissage des champs par l'utilisateur
 function formValidator() {
 
@@ -176,6 +177,7 @@ function formValidator() {
         } else if (testEmail === false) {
             //Si les données saisies par l'utilisateur ne sont pas contenu dans la regex alors affichage message erreur
             errorMessage.innerHTML = "Adresse mail invalide";
+            emailIsValid = false;
         } else if (testEmail === true) {
             errorMessage.innerHTML = "";
         }
@@ -220,6 +222,7 @@ function formValidator() {
     city.addEventListener("input", function () {
         validInfo(this);
     });
+
 };
 
 //Création des data JSON à envoyer à l'API constitué d'un objet contenat les 
@@ -246,6 +249,7 @@ function createJsonData() {
 //Envoyer les informations au server via l'API et attendre en 
 //retour la réponse du backend pour obtenir l'id qui servira de numéro de commande
 function postCart() {
+
     //Pointage du bouton
     const orderButton = document.getElementById("order");
     //Mise en place d'un événement au click du bouton qui 
@@ -253,23 +257,29 @@ function postCart() {
     orderButton.addEventListener("click", (e) => {
         //Suppression de la réaction narurelle du bouton
         e.preventDefault();
-        //Récupération des datas utilisateur
-        let jsonData = createJsonData();
+        if (emailIsValid === false) {
+            alert("Adresse mail invalide, veuillez réessayer");
+            location.reload();
+        } else {
+            //Récupération des datas utilisateur
+            let jsonData = createJsonData();
 
-        fetch("http://localhost:3000/api/products/order", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: jsonData,
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                //Réorientation de l'utilisateur sur la page de confirmation 
-                //de commande avec orderId qui est retourné par le server via l'url
-                localStorage.clear();
-                window.location.href = "./confirmation.html?id=" + data.orderId;
-            }
-            )
+            fetch("http://localhost:3000/api/products/order", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: jsonData,
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    //Réorientation de l'utilisateur sur la page de confirmation 
+                    //de commande avec orderId qui est retourné par le server via l'url
+                    localStorage.clear();
+                    window.location.href = "./confirmation.html?id=" + data.orderId;
+                }
+                )
+        }
+
     });
 };

@@ -6,11 +6,14 @@ fetch("http://localhost:3000/api/products")
             return res.json();
         }
     })
+    .catch(function (error){
+        console.log("erreur :" + error);
+    })
     .then(function (product) {
         /*Création des éléments de manière dynamique complété par les
          données récupérées de l'API*/
         for (let i = 0; i < product.length; i++) {
-            let section = document.getElementById("items")
+            let section = document.getElementById("items");
 
             //Création du lien principal
             const productLink = document.createElement("a");
@@ -40,6 +43,9 @@ fetch("http://localhost:3000/api/products")
             productDescription.innerHTML = product[i].description;
 
         }
+    })
+    .catch(function (error){
+        console.log("erreur :" + error);
     });
 
 

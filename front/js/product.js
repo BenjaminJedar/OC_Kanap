@@ -22,6 +22,9 @@ fetch(urlApi + "/" + productId)
             return res.json();
         }
     })
+    .catch(function (error){
+        console.log("erreur :" + error);
+    })
     //Affichage des caractéristiques du produit 
     .then(function (product) {
         //Création de l'img du produit
@@ -45,6 +48,9 @@ fetch(urlApi + "/" + productId)
             colorOption.value = product.colors[i];
             colorOption.innerHTML = `${product.colors[i]}`;
         };
+    })
+    .catch(function (error){
+        console.log("erreur :" + error);
     });
 
 //Pointages des élément de couleur, quantité et du bouton d'ajout au panier    
