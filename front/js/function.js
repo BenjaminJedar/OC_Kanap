@@ -86,7 +86,7 @@ function makeTotalPrice() {
     let cart = getCart();
     let totalPrice = 0;
     let pricePerProduct = 0;
-    //Pour chaque produit une calcul le prix total en fonction des articles puis on additionne tout les totaux
+    //Pour chaque produit on calcul le prix total en fonction des articles puis on additionne tout les totaux
     for (let i = 0; i < cart.length; i++) {
         pricePerProduct = parseInt(cart[i].quantity) * parseInt(cart[i].price);
         totalPrice += pricePerProduct;
@@ -123,7 +123,7 @@ function modifyQuantity() {
             for (let j = 0; j < cart.length; j++) {
                 //Récupération des infos du produit
                 const article = await getArticle(cart[i].id);
-                //Si le produit selectionné correspond au même id et couleur alors l'événenment modifi la quantité de l'article
+                //Si le produit selectionné correspond au même id et couleur alors l'événenment modifie la quantité de l'article
                 if (changingProductid === cart[j].id && changingProductColor === cart[j].color) {
                     cart[j].quantity = newQty;
                     if (newQty != 0) {
@@ -216,6 +216,10 @@ function formValidator() {
     });
 
     firstName.addEventListener("input", function () {
+        validInfo(this);
+    });
+
+    address.addEventListener("input", function () {
         validInfo(this);
     });
 

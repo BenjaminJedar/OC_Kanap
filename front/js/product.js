@@ -4,7 +4,11 @@ const title = document.querySelector("#title");
 const description = document.querySelector("#description");
 const price = document.querySelector("#price");
 const colors = document.querySelector("#colors");
+//Pointages des éléments quantité et bouton d'ajout au panier    
+const quantity = document.querySelector("#quantity");
+const addButton = document.querySelector("#addToCart");
 
+//Création de l'element img pour l'image du produit
 const productImg = document.createElement("img");
 
 //Création d'une variable contenant l'url de la page actuelle
@@ -13,7 +17,7 @@ let url = new URL(window.location.href);
 let productId = url.searchParams.get("id")
 let urlApi = "http://localhost:3000/api/products";
 //Initialisation d'un tableau de produit
-let arrayProduct = [];
+    let arrayProduct = [];
 
 //Utilisation de fetch pour cibler un produit en particulier dans l'API grâce à son id
 fetch(urlApi + "/" + productId)
@@ -53,16 +57,12 @@ fetch(urlApi + "/" + productId)
         console.log("erreur :" + error);
     });
 
-//Pointages des élément de couleur, quantité et du bouton d'ajout au panier    
-const color = document.querySelector("#colors");
-const quantity = document.querySelector("#quantity");
-const addButton = document.querySelector("#addToCart");
 
 /*Mise en place d'un événement de type "click" permettant 
-l'ajout au panier avec des conditions qui varrifies la 
+l'ajout au panier avec des conditions qui vérrifies la 
 bonne utilisation par l'utilisateur*/
 addButton.addEventListener("click", pushCart => {
-    if (color.value === "") {
+    if (colors.value === "") {
         alert("Veuillez choisir une couleur");
     }
     else if (quantity.value == 0) {
